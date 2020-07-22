@@ -12,25 +12,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.entity.Task;
 import com.example.entity.User;
-import com.example.enumeration.TaskState;
 import com.example.service.TaskService;
 import com.example.service.UserService;
+
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+	
 	@Autowired
 	UserService userService;
 
 	@Autowired
 	TaskService taskService;
+	
 
 	@PostMapping("/")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -51,6 +52,12 @@ public class UserController {
 		}
 		return new ResponseEntity<User>(user, HttpStatus.FOUND);
 	}
+	
+	@GetMapping("/")
+	public List<User> retrieveAllUsers() {
+
+		return userService.retrieveAllUsers();
+	}
 
 	@PostMapping("/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
@@ -70,6 +77,7 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 
+	
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/{userId}/tasks/{taskId}")
 	public ResponseEntity markAsDone(@PathVariable Long userId, @PathVariable Long taskId) {
@@ -82,20 +90,5 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e.getMessage());
 		}
 	}
-
-	@GetMapping("/{userId}/tasks")
-	public List<Task> retrieveAllTasksByState(@PathVariable Long userId, @RequestParam TaskState state) {
-
-		List<Task> tasks = taskService.findTasksByUserId(userId, state);
-		return tasks;
-	}
-
-	/*
-	 * @GetMapping("/{userId}/tasks") public List<Task>
-	 * retrieveAllTasks(@PathVariable Long userId) {
-	 * 
-	 * List<Task> tasks = taskService.findTasksByUserId(userId, null); return
-	 * tasks; }
-	 */
 
 }

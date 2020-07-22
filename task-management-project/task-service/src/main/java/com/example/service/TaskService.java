@@ -10,7 +10,9 @@ public interface TaskService {
 	Task createTask(Task task);
 
 	Task retrieveTask(Long id);
-
+	
+	List<Task> retrieveAllTasks();
+	
 	Task updateTask(Long id, Task task);
 
 	void deleteTask(Long id);
@@ -20,5 +22,6 @@ public interface TaskService {
 	Task markTaskAsDone(Long userId, Long taskId);
 
 	List<Task> findTasksByUserId(Long userId, TaskState state);
+
 
 }

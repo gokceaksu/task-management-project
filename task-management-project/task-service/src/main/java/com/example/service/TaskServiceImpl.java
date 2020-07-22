@@ -33,6 +33,11 @@ public class TaskServiceImpl implements TaskService {
 	public Task retrieveTask(Long id) {
 		return taskRepository.findById(id).get();
 	}
+	
+	@Override
+	public List<Task> retrieveAllTasks() {
+		return taskRepository.findAll();
+	}
 
 	@Override
 	public Task updateTask(Long id, Task task) {

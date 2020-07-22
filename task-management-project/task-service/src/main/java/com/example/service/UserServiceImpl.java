@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User retrieveUser(Long id) {
 		return userRepository.findById(id).get();
+	}
+	
+	@Override
+	public List<User> retrieveAllUsers() {
+		return userRepository.findAll();
 	}
 
 	@Override
